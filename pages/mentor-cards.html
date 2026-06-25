@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멘토 추천 - 비빌언덕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5DB672;
+            --primary-dark: #3F8F54;
+            --primary-light: #EAF7EE;
+            --text-primary: #1F2933;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --bg: #FFFFFF;
+            --sub-bg: #F8FAF9;
+            --font-main: 'Noto Sans KR', -apple-system, sans-serif;
+            --shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #F0F4F2;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            background-color: var(--bg);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 8px solid #1f2937;
+        }
+
+        .phone-notch {
+            width: 150px;
+            height: 25px;
+            background-color: #1f2937;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 1000;
+        }
+
+        /* 헤더 */
+        .app-header {
+            padding: 35px 20px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--bg);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .placeholder-btn {
+            width: 32px;
+        }
+
+        /* 컨텐츠 */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px 30px;
+            overflow: hidden;
+        }
+
+        .title-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .title-section h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .title-section p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* 3D 겹침 카드 컨테이너 */
+        .cards-deck {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 800px;
+            margin-bottom: 20px;
+            min-height: 380px;
+        }
+
+        /* 멘토 카드 공통 */
+        .mentor-card {
+            position: absolute;
+            width: 260px;
+            height: 360px;
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        /* 캐릭터 아바타 원형 */
+        .avatar-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 15px rgba(93, 182, 114, 0.15);
+        }
+
+        .mentor-name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .mentor-location {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            background-color: var(--primary-light);
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: auto;
+        }
+
+        .tag-item {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background-color: var(--sub-bg);
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .card-footer {
+            width: 100%;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .card-footer span {
+            color: var(--text-primary);
+        }
+
+        /* 3D 겹침 스타일 클래스 */
+        .mentor-card.card-left {
+            transform: translateX(-65px) translateZ(-80px) rotateY(15deg);
+            z-index: 1;
+            opacity: 0.65;
+            filter: blur(1px);
+        }
+
+        .mentor-card.card-center {
+            transform: translateX(0) translateZ(0) rotateY(0);
+            z-index: 10;
+            opacity: 1;
+            border: 2px solid var(--primary);
+            box-shadow: 0 20px 45px rgba(93, 182, 114, 0.18);
+        }
+
+        .mentor-card.card-right {
+            transform: translateX(65px) translateZ(-80px) rotateY(-15deg);
+            z-index: 2;
+            opacity: 0.65;
+            filter: blur(1px);
+        }
+
+        /* 카드 클릭 안내 팁 */
+        .deck-hint {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* CTA */
+        .action-area {
+            margin-top: auto;
+        }
+
+        .btn-cta {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
+            background-color: var(--primary);
+            color: var(--bg);
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(93, 182, 114, 0.25);
+            transition: var(--transition);
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="phone-notch"></div>
+        
+        <!-- 헤더 -->
+        <header class="app-header">
+            <a href="interests.html" class="back-btn" aria-label="이전 화면으로 이동">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <span class="header-title">추천 멘토</span>
+            <div class="placeholder-btn"></div>
+        </header>
+
+        <main class="content">
+            <div class="title-section">
+                <h1>나와 딱 맞는 지역 멘토를 찾았어요</h1>
+                <p>가장 끌리는 멘토의 카드를 눌러보세요.</p>
+            </div>
+
+            <!-- 3D 겹침 카드 데크 -->
+            <div class="cards-deck">
+                <!-- 1. 고성 멘토 (왼쪽 배치) -->
+                <div class="mentor-card card-left" id="card-gosung" onclick="selectCard('gosung')">
+                    <div class="avatar-circle">🏺</div>
+                    <h3 class="mentor-name">고성 반농반업 도예가</h3>
+                    <span class="mentor-location">강원 고성</span>
+                    <div class="tag-list">
+                        <span class="tag-item">#도예체험</span>
+                        <span class="tag-item">#텃밭</span>
+                        <span class="tag-item">#조용한마을</span>
+                    </div>
+                    <div class="card-footer">
+                        🚗 출발지 기준 <span>약 2시간 40분</span>
+                    </div>
+                </div>
+
+                <!-- 2. 양양 요가 멘토 (중앙 배치 - 기본 선택) -->
+                <div class="mentor-card card-center" id="card-yangyang" onclick="selectCard('yangyang')">
+                    <div class="avatar-circle">🧘</div>
+                    <h3 class="mentor-name">양양 요가 스테이 운영자</h3>
+                    <span class="mentor-location">강원 양양</span>
+                    <div class="tag-list">
+                        <span class="tag-item">#요가</span>
+                        <span class="tag-item">#바다마을</span>
+                        <span class="tag-item">#힐링</span>
+                    </div>
+                    <div class="card-footer">
+                        🚗 출발지 기준 <span>약 2시간 10분</span>
+                    </div>
+                </div>
+
+                <!-- 3. 춘천 서점 멘토 (오른쪽 배치) -->
+                <div class="mentor-card card-right" id="card-chuncheon" onclick="selectCard('chuncheon')">
+                    <div class="avatar-circle">📚</div>
+                    <h3 class="mentor-name">춘천 독립서점 오너</h3>
+                    <span class="mentor-location">강원 춘천</span>
+                    <div class="tag-list">
+                        <span class="tag-item">#독립서점</span>
+                        <span class="tag-item">#산책</span>
+                        <span class="tag-item">#작은가게</span>
+                    </div>
+                    <div class="card-footer">
+                        🚗 출발지 기준 <span>약 1시간 30분</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deck-hint">
+                💡 카드를 클릭하면 상세 멘토 추천으로 전환됩니다
+            </div>
+
+            <!-- CTA 버튼 -->
+            <div class="action-area">
+                <a href="mentor-day.html" class="btn-cta" id="cta-btn">양양 멘토 일상 엿보기</a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Vanilla JS: 카드 스왑 인터랙션 -->
+    <script>
+        const cardsInfo = {
+            gosung: { name: '고성 도예가' },
+            yangyang: { name: '양양 요가' },
+            chuncheon: { name: '춘천 서점' }
+        };
+
+        function selectCard(selectedId) {
+            const cards = {
+                gosung: document.getElementById('card-gosung'),
+                yangyang: document.getElementById('card-yangyang'),
+                chuncheon: document.getElementById('card-chuncheon')
+            };
+
+            const ctaBtn = document.getElementById('cta-btn');
+
+            // 클래스 초기화
+            for (let id in cards) {
+                cards[id].classList.remove('card-left', 'card-center', 'card-right');
+            }
+
+            if (selectedId === 'gosung') {
+                cards.gosung.classList.add('card-center');
+                cards.yangyang.classList.add('card-right');
+                cards.chuncheon.classList.add('card-left');
+                ctaBtn.textContent = '고성 멘토 일상 엿보기';
+            } else if (selectedId === 'yangyang') {
+                cards.gosung.classList.add('card-left');
+                cards.yangyang.classList.add('card-center');
+                cards.chuncheon.classList.add('card-right');
+                ctaBtn.textContent = '양양 멘토 일상 엿보기';
+            } else if (selectedId === 'chuncheon') {
+                cards.gosung.classList.add('card-right');
+                cards.yangyang.classList.add('card-left');
+                cards.chuncheon.classList.add('card-center');
+                ctaBtn.textContent = '춘천 멘토 일상 엿보기';
+            }
+        }
+    </script>
+</body>
+</html>

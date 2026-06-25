@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멘토 일상 - 비빌언덕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5DB672;
+            --primary-dark: #3F8F54;
+            --primary-light: #EAF7EE;
+            --text-primary: #1F2933;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --bg: #FFFFFF;
+            --sub-bg: #F8FAF9;
+            --font-main: 'Noto Sans KR', -apple-system, sans-serif;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #F0F4F2;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            background-color: var(--bg);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 8px solid #1f2937;
+        }
+
+        .phone-notch {
+            width: 150px;
+            height: 25px;
+            background-color: #1f2937;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 1000;
+        }
+
+        /* 헤더 */
+        .app-header {
+            padding: 35px 20px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--bg);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .placeholder-btn {
+            width: 32px;
+        }
+
+        /* 컨텐츠 */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 20px 24px;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        /* 상단 멘토 소개 카드 */
+        .mentor-intro-card {
+            background-color: var(--primary-light);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid rgba(93, 182, 114, 0.2);
+        }
+
+        .mentor-intro-badge {
+            background-color: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+
+        .mentor-intro-card h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .mentor-intro-card p {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+            word-break: keep-all;
+        }
+
+        /* 세로 타임라인 UI */
+        .timeline-section {
+            background-color: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding-left: 24px;
+        }
+
+        /* 타임라인 세로 선 */
+        .timeline-line {
+            position: absolute;
+            left: 5px;
+            top: 6px;
+            bottom: 6px;
+            width: 2px;
+            background-color: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 타임라인 노드 점 */
+        .timeline-dot {
+            position: absolute;
+            left: -24px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 0 2.5px var(--primary-light);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .timeline-time {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            min-width: 48px;
+        }
+
+        .timeline-activity {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* 구분선 */
+        .timeline-divider {
+            height: 1px;
+            border-bottom: 1px dashed var(--border);
+            margin: 12px 0;
+        }
+
+        /* 생활 정보 카드 */
+        .info-card {
+            background-color: var(--sub-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .info-card h4 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-item {
+            background-color: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .info-value {
+            font-size: 0.83rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* CTA */
+        .action-area {
+            margin-top: auto;
+        }
+
+        .btn-cta {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
+            background-color: var(--primary);
+            color: var(--bg);
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(93, 182, 114, 0.25);
+            transition: var(--transition);
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="phone-notch"></div>
+        
+        <!-- 헤더 -->
+        <header class="app-header">
+            <a href="mentor-cards.html" class="back-btn" aria-label="이전 화면으로 이동">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <span class="header-title">멘토 일상</span>
+            <div class="placeholder-btn"></div>
+        </header>
+
+        <main class="content">
+            <h1 class="page-title">멘토의 일상 엿보기</h1>
+
+            <!-- 상단 멘토 소개 카드 -->
+            <div class="mentor-intro-card">
+                <span class="mentor-intro-badge">🏺 도예가</span>
+                <h3>도예의 재미를 느껴보세요</h3>
+                <p>고성에서 작은 작업실과 텃밭을 함께 운영하는 반농반업 도예가입니다. 조용한 바다 마을에서 일과 삶의 조화를 빚어냅니다.</p>
+            </div>
+
+            <!-- 타임라인 -->
+            <div class="timeline-section">
+                <div class="timeline-title">⏰ 하루 일상 루틴</div>
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    
+                    <!-- 오전 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-time">08:00</span>
+                            <span class="timeline-activity">🌞 아침 기상 및 동네 가벼운 산책</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-time">08:30</span>
+                            <span class="timeline-activity">🥬 텃밭에서 직접 기른 채소로 아침 식사</span>
+                        </div>
+                    </div>
+
+                    <!-- 오전/오후 구분선 -->
+                    <div class="timeline-divider"></div>
+
+                    <!-- 오후 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-time">10:00</span>
+                            <span class="timeline-activity">🏺 작업실로 이동 및 점토 물레 작업 개시</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-time">13:00</span>
+                            <span class="timeline-activity">🍲 동네 커뮤니티 식당에서 주민들과 점심</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 생활 정보 카드 -->
+            <div class="info-card">
+                <h4>🏡 지역 적응 생활 정보</h4>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">🚗 예상 이동시간</span>
+                        <span class="info-value">약 2시간 40분 (고성)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">👣 혼자 방문 난이도</span>
+                        <span class="info-value">쉬움 (친절함)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">🛏️ 숙소 연계</span>
+                        <span class="info-value">연계 가능 (공방 옆방)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">🚌 이동 방법</span>
+                        <span class="info-value">고성터미널에서 택시 12분</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">👥 함께 만나는 사람</span>
+                        <span class="info-value">멘토 1명, 로컬 참여자 2명</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">🎒 추천 준비물</span>
+                        <span class="info-value">편한 신발, 작업 앞치마</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA 버튼 -->
+            <div class="action-area">
+                <a href="apply.html" class="btn-cta">동행 신청하기</a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

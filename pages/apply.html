@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동행 신청 - 비빌언덕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5DB672;
+            --primary-dark: #3F8F54;
+            --primary-light: #EAF7EE;
+            --text-primary: #1F2933;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --bg: #FFFFFF;
+            --sub-bg: #F8FAF9;
+            --font-main: 'Noto Sans KR', -apple-system, sans-serif;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #F0F4F2;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            background-color: var(--bg);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 8px solid #1f2937;
+        }
+
+        .phone-notch {
+            width: 150px;
+            height: 25px;
+            background-color: #1f2937;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 1000;
+        }
+
+        /* 헤더 */
+        .app-header {
+            padding: 35px 20px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--bg);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .placeholder-btn {
+            width: 32px;
+        }
+
+        /* 컨텐츠 */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 20px 24px;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
+        }
+
+        /* 체험 유형 선택 */
+        .option-section {
+            margin-bottom: 18px;
+        }
+
+        .section-label {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .type-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .type-option {
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 10px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            background-color: var(--sub-bg);
+            transition: var(--transition);
+        }
+
+        .type-option.selected {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* 주요 체험 정보 카드 */
+        .details-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 16px;
+            background-color: #ffffff;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .details-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .details-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .details-value {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .details-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            background-color: var(--primary-light);
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        /* 일정표 테이블 */
+        .schedule-section {
+            margin-bottom: 20px;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+            font-size: 0.82rem;
+            background-color: #ffffff;
+        }
+
+        .schedule-table th {
+            background-color: var(--sub-bg);
+            color: var(--text-primary);
+            font-weight: 700;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .schedule-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .schedule-highlight {
+            color: var(--primary-dark) !important;
+            font-weight: 700 !important;
+        }
+
+        /* 경고 및 정보 박스 */
+        .notice-box {
+            background-color: #FFF9EB;
+            border: 1px solid #FFEBA2;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .notice-box span {
+            font-size: 1.1rem;
+        }
+
+        .notice-box p {
+            font-size: 0.78rem;
+            line-height: 1.45;
+            color: #7A5B00;
+            font-weight: 500;
+            word-break: keep-all;
+        }
+
+        .connect-box {
+            background-color: var(--primary-light);
+            border: 1px solid rgba(93, 182, 114, 0.2);
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .connect-box span {
+            font-size: 1.1rem;
+        }
+
+        .connect-box p {
+            font-size: 0.78rem;
+            line-height: 1.45;
+            color: var(--primary-dark);
+            font-weight: 500;
+            word-break: keep-all;
+        }
+
+        /* CTA */
+        .action-area {
+            margin-top: auto;
+        }
+
+        .btn-cta {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
+            background-color: var(--primary);
+            color: var(--bg);
+            border: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(93, 182, 114, 0.25);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* 정적 팝업 완료 모달 */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(31, 41, 51, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            width: 85%;
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-icon {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+            display: inline-block;
+            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); }
+            100% { transform: scale(1); }
+        }
+
+        .modal-content h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            word-break: keep-all;
+        }
+
+        .btn-modal-close {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .btn-modal-close:hover {
+            background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="phone-notch"></div>
+        
+        <!-- 헤더 -->
+        <header class="app-header">
+            <a href="mentor-day.html" class="back-btn" aria-label="이전 화면으로 이동">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <span class="header-title">신청하기</span>
+            <div class="placeholder-btn"></div>
+        </header>
+
+        <main class="content">
+            <h1 class="page-title">멘토와의 동행 신청</h1>
+
+            <!-- 체험 유형 선택 -->
+            <div class="option-section">
+                <div class="section-label">체험 프로그램 유형</div>
+                <div class="type-grid">
+                    <div class="type-option" onclick="selectType(this)">반나절 체험</div>
+                    <div class="type-option selected" onclick="selectType(this)">3일 동행</div>
+                    <div class="type-option" onclick="selectType(this)">7일 살아보기</div>
+                    <div class="type-option" onclick="selectType(this)">2주 지역 탐색</div>
+                </div>
+            </div>
+
+            <!-- 주요 체험 정보 카드 -->
+            <div class="details-card">
+                <div class="details-left">
+                    <span class="details-title">멘토의 주요 체험활동</span>
+                    <span class="details-value">물레체험, 청보리심기</span>
+                </div>
+                <div class="details-badge">고성 특화</div>
+            </div>
+
+            <!-- 일정표 UI -->
+            <div class="schedule-section">
+                <div class="section-label">🗓️ 예상 매칭 스케줄러</div>
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>이동</td>
+                            <td>작업실</td>
+                            <td>텃밭</td>
+                            <td>산책</td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-highlight">물레</td>
+                            <td>점심</td>
+                            <td class="schedule-highlight">커뮤니티</td>
+                            <td>회고</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 신청 전 안내 -->
+            <div class="notice-box">
+                <span>⚠️</span>
+                <p>신청 전 멘토의 가능 일정, 숙소 여부, 이동 방법을 함께 확인해보세요.</p>
+            </div>
+
+            <!-- 체험 후 연결 안내 -->
+            <div class="connect-box">
+                <span>🌱</span>
+                <p>체험 이후에도 멘토 소식, 커뮤니티 모임, 다음 방문 프로그램을 이어서 받아볼 수 있어요.</p>
+            </div>
+
+            <!-- CTA 확인 버튼 -->
+            <div class="action-area">
+                <button onclick="showModal()" class="btn-cta">확인</button>
+            </div>
+        </main>
+
+        <!-- 완료 팝업 레이어 -->
+        <div class="modal-overlay" id="completion-modal">
+            <div class="modal-content">
+                <span class="modal-icon">🎉</span>
+                <h3>동행 신청이 접수되었습니다!</h3>
+                <p>설정하신 취향 데이터를 기반으로 멘토에게 알림이 전송되었습니다. 24시간 내에 매칭 여부를 안내해 드립니다.</p>
+                <a href="../index.html" class="btn-modal-close">첫 화면으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vanilla JS 로직 -->
+    <script>
+        function selectType(element) {
+            const options = document.querySelectorAll('.type-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function showModal() {
+            document.getElementById('completion-modal').classList.add('show');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온보딩 - 비빌언덕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5DB672;
+            --primary-dark: #3F8F54;
+            --primary-light: #EAF7EE;
+            --text-primary: #1F2933;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --bg: #FFFFFF;
+            --sub-bg: #F8FAF9;
+            --font-main: 'Noto Sans KR', -apple-system, sans-serif;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #F0F4F2;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            background-color: var(--bg);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 8px solid #1f2937;
+        }
+
+        .phone-notch {
+            width: 150px;
+            height: 25px;
+            background-color: #1f2937;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 1000;
+        }
+
+        /* 헤더 바 */
+        .app-header {
+            padding: 35px 20px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--bg);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .placeholder-btn {
+            width: 32px;
+        }
+
+        /* 컨텐츠 */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 24px 30px;
+            overflow-y: auto;
+        }
+
+        .intro-section {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .intro-section h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            line-height: 1.4;
+            color: var(--text-primary);
+            word-break: keep-all;
+        }
+
+        /* 기능 카드 목록 */
+        .cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .feature-card {
+            background-color: var(--sub-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+            background-color: var(--primary-light);
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            background-color: var(--bg);
+            padding: 10px;
+            border-radius: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-info h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            background-color: var(--primary);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+
+        .card-info p {
+            font-size: 0.85rem;
+            line-height: 1.45;
+            color: var(--text-secondary);
+            word-break: keep-all;
+        }
+
+        /* CTA */
+        .action-area {
+            margin-top: auto;
+        }
+
+        .btn-cta {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
+            background-color: var(--primary);
+            color: var(--bg);
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(93, 182, 114, 0.25);
+            transition: var(--transition);
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="phone-notch"></div>
+        
+        <!-- 헤더 영역 -->
+        <header class="app-header">
+            <a href="../index.html" class="back-btn" aria-label="이전 화면으로 이동">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 19L8 12L15 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <span class="header-title">서비스 소개</span>
+            <div class="placeholder-btn"></div>
+        </header>
+
+        <main class="content">
+            <!-- 소개 타이틀 -->
+            <div class="intro-section">
+                <h1>낯선 지역에서도<br>취향이 맞는 사람과 공간을 발견하세요</h1>
+            </div>
+
+            <!-- 핵심 기능 카드 3종 -->
+            <div class="cards-list">
+                <!-- 기능 1 -->
+                <div class="feature-card">
+                    <div class="card-icon">🚗</div>
+                    <div class="card-info">
+                        <h3>출발지 기반 지역 탐색 <span class="card-badge">STEP 1</span></h3>
+                        <p>내가 실제로 갈 수 있는 지역을 확인하고, 관심 지역까지 걸리는 이동 가능성을 바로 알아봐요.</p>
+                    </div>
+                </div>
+
+                <!-- 기능 2 -->
+                <div class="feature-card">
+                    <div class="card-icon">🤝</div>
+                    <div class="card-info">
+                        <h3>취향 기반 지역 멘토 추천 <span class="card-badge">STEP 2</span></h3>
+                        <p>단순 관광 정보 대신, 나의 취향/관심사에 맞는 현지 지역 멘토와 커뮤니티 공간을 추천해 드려요.</p>
+                    </div>
+                </div>
+
+                <!-- 기능 3 -->
+                <div class="feature-card">
+                    <div class="card-icon">🏕️</div>
+                    <div class="card-info">
+                        <h3>짧은 체험부터 살아보기 신청 <span class="card-badge">STEP 3</span></h3>
+                        <p>당장 이주할 필요 없어요. 반나절 물레 체험부터 2주간의 지역 탐색까지 내 템포에 맞춰 안전하게 경험해 보세요.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA 버튼 -->
+            <div class="action-area">
+                <a href="neighborhood.html" class="btn-cta">내 관심 지역 찾기</a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

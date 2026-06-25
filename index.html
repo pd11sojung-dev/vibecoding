@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비빌언덕 - 기대어볼 사람과 공간을 찾아서</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5DB672;
+            --primary-dark: #3F8F54;
+            --primary-light: #EAF7EE;
+            --text-primary: #1F2933;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --bg: #FFFFFF;
+            --sub-bg: #F8FAF9;
+            --font-main: 'Noto Sans KR', -apple-system, sans-serif;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #F0F4F2;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 모바일 프레임 모형 */
+        .phone-container {
+            width: 100%;
+            max-width: 390px;
+            height: 844px;
+            background-color: var(--bg);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 8px solid #1f2937; /* 스마트폰 베젤 형상화 */
+        }
+
+        /* 스마트폰 상단 노치 영역 */
+        .phone-notch {
+            width: 150px;
+            height: 25px;
+            background-color: #1f2937;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-notch::before {
+            content: '';
+            width: 40px;
+            height: 4px;
+            background-color: #374151;
+            border-radius: 2px;
+        }
+
+        /* 메인 컨텐츠 영역 */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 24px 30px;
+            overflow-y: auto;
+            position: relative;
+            margin-top: 25px; /* 노치 높이만큼 여백 */
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .logo-text {
+            font-family: 'Outfit', var(--font-main);
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .logo-text span {
+            background-color: var(--primary-light);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        /* 중앙 일러스트 비주얼 */
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .illustration-container {
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle, var(--primary-light) 0%, rgba(255,255,255,0) 70%);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* SVG 지도/산 일러스트 */
+        .map-graphic {
+            width: 200px;
+            height: 200px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .hero-text {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .hero-text h1 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-text p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            word-break: keep-all;
+        }
+
+        /* 버튼 및 링크 영역 */
+        .action-area {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: auto;
+        }
+
+        .btn-cta {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
+            background-color: var(--primary);
+            color: var(--bg);
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(93, 182, 114, 0.25);
+            transition: var(--transition);
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(63, 143, 84, 0.35);
+        }
+
+        .btn-cta:active {
+            transform: translateY(0);
+        }
+
+        .link-secondary {
+            display: inline-block;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+            align-self: center;
+        }
+
+        .link-secondary:hover {
+            color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        /* 멘토 일러스트 노드 효과 */
+        .mentor-dot {
+            position: absolute;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            box-shadow: 0 6px 15px rgba(93, 182, 114, 0.3);
+            border: 3px solid white;
+            transition: var(--transition);
+        }
+
+        .mentor-dot:hover {
+            transform: scale(1.15);
+        }
+
+        .dot-1 { width: 50px; height: 50px; top: 20px; left: 30px; animation: bounce 3.5s infinite 0.2s; }
+        .dot-2 { width: 55px; height: 55px; bottom: 30px; right: 20px; animation: bounce 4s infinite 0.5s; }
+        .dot-3 { width: 45px; height: 45px; top: 110px; right: 30px; animation: bounce 3.8s infinite 0.8s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <!-- 노치 디자인 -->
+        <div class="phone-notch"></div>
+        
+        <main class="content">
+            <!-- 로고 영역 -->
+            <div class="logo-area">
+                <h2 class="logo-text">비빌언덕 <span>MVP</span></h2>
+            </div>
+
+            <!-- 중앙 일러스트 비주얼 -->
+            <div class="hero-visual">
+                <div class="illustration-container">
+                    <svg class="map-graphic" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 산 형태 -->
+                        <path d="M40 160L85 85L110 120L150 60L180 160H40Z" fill="#EAF7EE" stroke="#5DB672" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M85 85L100 110" stroke="#5DB672" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M150 60L165 110" stroke="#5DB672" stroke-width="3" stroke-linecap="round"/>
+                        <!-- 지도 격자 느낌의 은은한 원형들 -->
+                        <circle cx="100" cy="100" r="85" stroke="#E5E7EB" stroke-width="1.5" stroke-dasharray="4 4"/>
+                        <circle cx="100" cy="100" r="55" stroke="#E5E7EB" stroke-width="1.5" stroke-dasharray="4 4"/>
+                        <!-- 연결 선 -->
+                        <path d="M65 50 C 90 90, 110 80, 150 140" stroke="#E2F0E5" stroke-width="3" stroke-dasharray="5 5"/>
+                    </svg>
+                    <!-- 멘토 아바타 노드들 -->
+                    <div class="mentor-dot dot-1" title="고성 도예가 멘토">🏺</div>
+                    <div class="mentor-dot dot-2" title="양양 요가 멘토">🧘</div>
+                    <div class="mentor-dot dot-3" title="춘천 서점 멘토">📚</div>
+                </div>
+            </div>
+
+            <!-- 핵심 문구 -->
+            <div class="hero-text">
+                <h1>내가 기대어볼<br>지역 커뮤니티를 만나보세요</h1>
+                <p>출발지와 관심 지역을 설정하고<br>나와 맞는 지역 멘토를 찾아보세요.</p>
+            </div>
+
+            <!-- CTA 버튼 영역 -->
+            <div class="action-area">
+                <a href="pages/neighborhood.html" class="btn-cta">지역 탐색 시작하기</a>
+                <a href="pages/onboarding.html" class="link-secondary">서비스 알아보기</a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
