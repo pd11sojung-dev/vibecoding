@@ -144,6 +144,10 @@
             width: 200px;
             height: 200px;
             animation: float 4s ease-in-out infinite;
+
+            /* 0626 추가 */
+            position: relative;
+            z-index: 1;
         }
 
         @keyframes float {
@@ -237,6 +241,8 @@
             box-shadow: 0 6px 15px rgba(93, 182, 114, 0.3);
             border: 3px solid white;
             transition: var(--transition);
+            z-index: 2;
+            
         }
 
         .mentor-dot:hover {
@@ -262,22 +268,24 @@
         <main class="content">
             <!-- 로고 영역 -->
             <div class="logo-area">
-                <h2 class="logo-text">비빌언덕 <span>MVP</span></h2>
+                <h2 class="logo-text">비빌언덕</h2>
             </div>
 
             <!-- 중앙 일러스트 비주얼 -->
             <div class="hero-visual">
                 <div class="illustration-container">
                     <svg class="map-graphic" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- 산 형태 -->
-                        <path d="M40 160L85 85L110 120L150 60L180 160H40Z" fill="#EAF7EE" stroke="#5DB672" stroke-width="3" stroke-linejoin="round"/>
-                        <path d="M85 85L100 110" stroke="#5DB672" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M150 60L165 110" stroke="#5DB672" stroke-width="3" stroke-linecap="round"/>
+    
                         <!-- 지도 격자 느낌의 은은한 원형들 -->
                         <circle cx="100" cy="100" r="85" stroke="#E5E7EB" stroke-width="1.5" stroke-dasharray="4 4"/>
                         <circle cx="100" cy="100" r="55" stroke="#E5E7EB" stroke-width="1.5" stroke-dasharray="4 4"/>
                         <!-- 연결 선 -->
                         <path d="M65 50 C 90 90, 110 80, 150 140" stroke="#E2F0E5" stroke-width="3" stroke-dasharray="5 5"/>
+                        <!-- 산 형태 -->
+                        <path d="M40 160L85 85L110 120L150 60L180 160H40Z" fill="#EAF7EE" stroke="#5DB672" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M85 85L110 120" stroke="#5DB672" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M150 60L180 160" stroke="#5DB672" stroke-width="3" stroke-linecap="round"/>
+
                     </svg>
                     <!-- 멘토 아바타 노드들 -->
                     <div class="mentor-dot dot-1" title="고성 도예가 멘토">🏺</div>
